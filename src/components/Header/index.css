@@ -1,0 +1,4 @@
+.liClassName {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,5 @@
+.tableStyle {
+  display: flex;
+  flex: row;
+  justify-content: space-around;
+}
