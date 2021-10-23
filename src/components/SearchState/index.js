@@ -9,7 +9,7 @@ const SearchState = props => {
       <Link to={`/state/${stateCode}`}>
         <li>
           <p>{stateName}</p>
-          <BiChevronRightSquare testid="BiChevronRightSquare" />
+          <BiChevronRightSquare testid="searchResultChevronRightIcon" />
           <p>{stateCode}</p>
         </li>
       </Link>

@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
+import EachStateItem from '../EachStateItem'
 
 class EachState extends Component {
   state = {eachStateData: [], isLoading: true}
@@ -15,8 +16,15 @@ class EachState extends Component {
 
     const response = await fetch('https://apis.ccbp.in/covid19-state-wise-data')
     const data = await response.json()
-    console.log(data[stateCode])
     this.setState({eachStateData: data[stateCode], isLoading: false})
+  }
+
+  renderEachState = () => {
+    const {eachStateData} = this.state
+    console.log(eachStateData)
+    return (
+      <EachStateItem stateData={eachStateData} key={eachStateData.stateCode} />
+    )
   }
 
   render() {
@@ -25,9 +33,15 @@ class EachState extends Component {
     return (
       <div className="blog-container">
         {isLoading ? (
-          <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
+          <Loader
+            type="TailSpin"
+            color="#00BFFF"
+            height={50}
+            width={50}
+            testid="stateDetailsLoader"
+          />
         ) : (
-          ''
+          this.renderEachState()
         )}
       </div>
     )

@@ -1,5 +1,5 @@
-.tableStyle {
+.tableDisplay {
   display: flex;
-  flex: column;
+  flex: row;
   justify-content: space-around;
 }

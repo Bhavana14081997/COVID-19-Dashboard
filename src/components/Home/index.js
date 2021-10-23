@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
+import {FcGenericSortingAsc, FcGenericSortingDesc} from 'react-icons/fc'
 import Footer from '../Footer'
 import Header from '../Header'
 import StatesListItem from '../StatesListItem'
@@ -182,63 +183,73 @@ class Home extends Component {
     const response = await fetch(url)
     const fetchedData = await response.json()
     const formattedData = statesList.map(eachState => {
-      const stateData = fetchedData[eachState.stateCode].total
+      const stateData = fetchedData[eachState.stateCode]
       const stateDetails = {
         ...eachState,
         ...stateData,
       }
+
       return stateDetails
     })
 
     this.setState({statesData: formattedData})
     this.setLoading(false)
+    console.log(formattedData)
   }
 
   renderLoader = () => (
     <div testid="homeRouteLoader">
-      <Loader type="Oval" color="#black" height="50" />
+      <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
     </div>
   )
 
+  //   sortAscending = () => {
+  //     const {statesData} = this.state
+  //     stateName.sort((a, b) => a - b)
+  //     this.setState({statesData})
+  //   }
+
+  //   sortDescending = () => {
+  //     const {statesData} = this.state
+  //     stateName.sort((a, b) => a - b).reverse()
+  //     this.setState({statesData})
+  //   }
+
   renderList = () => {
     const {statesData} = this.state
-
+    // console.log(statesData)
     return (
-      <ul testid="searchResultsUnorderedList">
-        {statesData.map(eachState => (
-          <StatesListItem stateDetails={eachState} key={eachState.stateCode} />
-        ))}
-      </ul>
+      <div testid="stateWiseCovidDataTable" className="tableStyle">
+        <p testid="ascendingSortIcon">{FcGenericSortingAsc}</p>
+        <p testid="descendingSortIcon">{FcGenericSortingDesc}</p>
+        <h1>States/UT</h1>
+        <p>Confirmed</p>
+        <p>Active</p>
+        <p>Recovered</p>
+        <p>Deceased</p>
+        <p>Population</p>
+        <div>
+          <ul testid="stateWiseCovidDataTable">
+            {statesData.map(eachState => (
+              <StatesListItem
+                stateDetails={eachState}
+                key={eachState.stateCode}
+              />
+            ))}
+          </ul>
+        </div>
+      </div>
     )
   }
 
   renderTotal() {
     const {statesData} = this.state
-    let sum = 0
-    statesData.forEach(eachItem => {
-      sum += eachItem.confirmed
-    })
-    let sum1 = 0
-    statesData.forEach(eachItem => {
-      sum1 += eachItem.deceased
-    })
-    let sum2 = 0
-    statesData.forEach(eachItem => {
-      sum2 += eachItem.recovered
-    })
-    let sum3 = 0
-    statesData.forEach(eachItem => {
-      sum3 = eachItem.confirmed - eachItem.recovered
-    })
+
     return (
-      <ul>
-        <HomeTotalStats
-          confirmed={sum}
-          deceased={sum1}
-          recovered={sum2}
-          active={sum3}
-          key={statesData.stateCode}
-        />
+      <ul testid="stateWiseCovidDataTable">
+        {statesData.map(eachState => (
+          <HomeTotalStats stateDetails={eachState} key={eachState.stateCode} />
+        ))}
       </ul>
     )
   }
@@ -262,7 +273,7 @@ class Home extends Component {
         {searchInput === '' ? (
           ''
         ) : (
-          <ul>
+          <ul testid="searchResultsUnorderedList">
             {searchResults.map(each => (
               <SearchState statesDetails={each} key={each.stateCode} />
             ))}

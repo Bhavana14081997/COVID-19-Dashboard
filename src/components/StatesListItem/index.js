@@ -2,22 +2,20 @@ import './index.css'
 
 const StatesListItem = props => {
   const {stateDetails} = props
-  const {confirmed, deceased, recovered, stateName} = stateDetails
+  const {stateName, total, meta} = stateDetails
+  const {confirmed, deceased, recovered} = total
+  const {population} = meta
   let sum = 0
   sum = confirmed - recovered
 
   return (
-    //   <div testid="stateWiseCovidDataTable">
-
-    //   </div>
-    <div>
-      <table className="tableStyle" testid="stateWiseCovidDataTable">
-        <td>{stateName}</td>
-        <td>{confirmed}</td>
-        <td>{sum}</td>
-        <td>{recovered}</td>
-        <td>{deceased}</td>
-      </table>
+    <div className="tableDisplay">
+      <li>{stateName}</li>
+      <li>{confirmed}</li>
+      <li>{sum}</li>
+      <li>{recovered}</li>
+      <li>{deceased}</li>
+      <li>{population}</li>
     </div>
   )
 }
